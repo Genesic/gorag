@@ -9,9 +9,9 @@ import (
 // Loader 定義文檔載入器的介面
 // 用於從各種來源（檔案、URL、資料庫等）載入文檔
 type Loader interface {
-	Load(ctx context.Context, source string) ([]gorag.Document, error)
+	Load(ctx context.Context, source string) (*gorag.Document, error)
+	LoadURL(ctx context.Context, url string) (*gorag.Document, error)
 	LoadMultiple(ctx context.Context, sources []string) ([]gorag.Document, error)
-	LoadURL(ctx context.Context, url string) ([]gorag.Document, error)
 }
 
 type Options struct {

@@ -28,7 +28,7 @@ func New(opts ...loader.Options) loader.Loader {
 }
 
 // Load 從檔案路徑載入純文字文檔
-func (l *Loader) Load(ctx context.Context, source string) ([]gorag.Document, error) {
+func (l *Loader) Load(ctx context.Context, source string) (*gorag.Document, error) {
 	select {
 	case <-ctx.Done():
 		return nil, ctx.Err()
@@ -76,7 +76,7 @@ func (l *Loader) Load(ctx context.Context, source string) ([]gorag.Document, err
 		doc.Metadata.Extra[k] = v
 	}
 
-	return []gorag.Document{doc}, nil
+	return &doc, nil
 }
 
 // LoadMultiple 批次載入多個檔案
@@ -94,14 +94,14 @@ func (l *Loader) LoadMultiple(ctx context.Context, sources []string) ([]gorag.Do
 		if err != nil {
 			return nil, fmt.Errorf("failed to load %s: %w", source, err)
 		}
-		docs = append(docs, loaded...)
+		docs = append(docs, *loaded)
 	}
 
 	return docs, nil
 }
 
 // LoadURL 從 URL 載入純文字內容
-func (l *Loader) LoadURL(ctx context.Context, url string) ([]gorag.Document, error) {
+func (l *Loader) LoadURL(ctx context.Context, url string) (*gorag.Document, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
@@ -149,7 +149,7 @@ func (l *Loader) LoadURL(ctx context.Context, url string) ([]gorag.Document, err
 		doc.Metadata.Extra[k] = v
 	}
 
-	return []gorag.Document{doc}, nil
+	return &doc, nil
 }
 
 func generateID(source string) string {

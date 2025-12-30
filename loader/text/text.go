@@ -19,7 +19,7 @@ type Loader struct {
 	opts loader.Options
 }
 
-func New(opts ...loader.Options) loader.Loader {
+func NewLoader(opts ...loader.Options) loader.Loader {
 	o := loader.DefaultLoaderOptions()
 	if len(opts) > 0 {
 		o = opts[0]

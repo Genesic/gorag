@@ -15,7 +15,7 @@ type Splitter struct {
 }
 
 // New 建立新的 RecursiveCharacterSplitter
-func New(opts ...splitter.Options) splitter.Splitter {
+func NewSplitter(opts ...splitter.Options) splitter.Splitter {
 	o := splitter.DefaultOptions()
 	if len(opts) > 0 {
 		o = opts[0]
